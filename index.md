@@ -1,5 +1,5 @@
-# Project Name Here
-Replace this text with a brief description (2-3 sentences) of your project. This description should draw the reader in and make them interested in what you've built. You can include what the biggest challenges, takeaways, and triumphs from completing the project were. As you complete your portfolio, remember your audience is less familiar than you are with all that your project entails!
+# Ball Tracking Robot
+This rover uses a Picam to detect a red ball in front of it, moves towards it, and uses ultrasonic sensors to stop it when it gets too close. While I had some troubles with code, I was able to overcome my challenges and complete this robot with modifications
 
 You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
 ```HTML 
