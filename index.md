@@ -5,7 +5,7 @@ This rover uses a Picam to detect a red ball in front of it, moves towards it, a
 |:--:|:--:|:--:|:--:|
 | Devan G | Marin Academy | Electrical Engineering | Incoming Sophmore
 
-![Headstone Image](logo.svg)
+![Headstone Image](IMG_2211.jpg)
   
 # Final Milestone
 
@@ -41,16 +41,204 @@ Here's where you'll put images of your schematics. [Tinkercad](https://www.tinke
 Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
 ```c++
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
+import cv2
+from picamera2 import Picamera2, Preview
+import RPi.GPIO as gpio
+import time              
+import numpy as np
 
-void loop() {
-  // put your main code here, to run repeatedly:
+ball = 0
 
-}
+gpio.setmode(gpio.BCM)
+gpio.setwarnings(False)
+gpio.setup(17, gpio.OUT)
+gpio.setup(22, gpio.OUT)
+gpio.setup(23, gpio.OUT)
+gpio.setup(24, gpio.OUT)
+
+from gpiozero import DistanceSensor
+
+def distanceSensor():
+  ultrasonic1 = DistanceSensor(echo=14, trigger=15, threshold_distance=0.5)
+  ultrasonic2 = DistanceSensor(echo=20, trigger=21, threshold_distance=0.5)
+  ultrasonic3 = DistanceSensor(echo=5, trigger=6, threshold_distance=0.5)
+  return ultrasonic3.distance * 100, ultrasonic2.distance * 100, ultrasonic1.distance * 100
+  
+
+def reverse():
+
+ gpio.output(17, True)
+ gpio.output(22, False)
+ gpio.output(23, True) 
+ gpio.output(24, False)
+
+
+def forward():
+
+ gpio.output(17, False)
+ gpio.output(22, True)
+ gpio.output(23, False) 
+ gpio.output(24, True)
+
+
+def stop(sec):
+ 
+ gpio.output(17, False)
+ gpio.output(22, False)
+ gpio.output(23, False) 
+ gpio.output(24, False)
+ time.sleep(sec)
+
+def sharpRight():
+ 
+ gpio.output(17, True)
+ gpio.output(22, False)
+ gpio.output(23, False) 
+ gpio.output(24, True)
+ 
+def right():
+ 
+ gpio.output(17, False)
+ gpio.output(22, False)
+ gpio.output(23, False) 
+ gpio.output(24, True)
+ 
+ 
+
+def sharpLeft():
+ 
+ gpio.output(17, False)
+ gpio.output(22, True)
+ gpio.output(23, True) 
+ gpio.output(24, False)
+
+def left():
+ 
+ gpio.output(17, gpio.LOW)
+ gpio.output(22, gpio.HIGH)
+ gpio.output(23, gpio.LOW) 
+ gpio.output(24, gpio.LOW)
+
+def segment_colour(frame):   
+    hsv_roi =  cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+    
+    mask_1 = cv2.inRange(hsv_roi, np.array([100, 190,1]), np.array([190,255,255]))
+    
+    mask = mask_1 
+    kern_dilate = np.ones((12,12),np.uint8)
+    kern_erode  = np.ones((6,6),np.uint8)
+    mask = cv2.erode(mask, kern_erode)
+    mask = cv2.dilate(mask, kern_dilate)
+    
+    (h,w) = mask.shape
+    
+    
+    
+    #cv2.imshow('mask', mask) 
+    
+    return mask
+
+
+def find_blob(blob):  
+    largest_contour=0
+    cont_index=0
+    contours, hierarchy = cv2.findContours(blob, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    for idx, contour in enumerate(contours):
+        area=cv2.contourArea(contour)
+        if (area >largest_contour):
+            largest_contour=area
+            cont_index=idx
+                    
+    r=(0,0,2,2)
+    if len(contours) > 0:
+        r = cv2.boundingRect(contours[cont_index])
+        
+     
+    return r,largest_contour
+
+
+picam2 = Picamera2()
+
+camera_config = picam2.create_still_configuration(main={"size": (1920, 1080)}, lores={"size": (480, 270)}, display="lores")
+
+picam2.configure(camera_config)
+#picam2.start_preview(Preview.QTGL)  
+picam2.start()
+
+time.sleep(2)
+
+
+
+while(True):
+
+    distance1, distance2, distance3 = distanceSensor()
+    #print(distance1, distance2, distance3)
+
+
+    startTime = time.time()
+    
+    if distance1 < 5:
+       stop(5)
+    if distance2 < 5:
+       stop(5)
+    if distance3 < 5:
+       stop(5)
+    
+    im = picam2.capture_array()
+    height = im.shape[0]
+    width = im.shape[1]
+     
+    mask_red=segment_colour(im[:,:,[0,1,2]])
+    loct,area=find_blob(mask_red)
+    x,y,w,h=loct
+    print(area, loct)
+    centerx = x + w/2
+    centery = y + h/2
+    center = (centerx, centery)
+    print(center)
+    #if area > 1100000:
+        #stop(1)
+    if centerx < 200 and centerx > 0 and area > 10000:
+        left()
+        time.sleep(0.05)
+        stop(0.01)
+        print("left")
+        ball = 1
+    elif centerx > 1700:
+        time.sleep(0.05)
+        right()
+        stop(0.01)
+        print("right")
+    elif centerx > 1600 and area > 10000:
+        ball = 2
+    else:
+        stop(0.01)
+        forward()
+        time.sleep(0.05)
+        print("forward")
+        ball = 0
+    if area < 100000 and ball == 1:
+        stop(0.01)
+        sharpLeft()
+        print("sharp left")
+        time.sleep(0.05)
+        stop(0.01)
+    elif area < 100000 and ball == 2:
+        stop(0.01)
+        sharpRight()
+        print("sharp right")
+        time.sleep(0.1)
+        stop(0.01)
+    elif area < 100000 and ball == 0:
+        stop(0.01)
+        sharpRight()
+        print("sharp right")
+        time.sleep(0.1)
+        stop(0.01)
+    stopTime = time.time()
+    elapsedTime = stopTime - startTime
+    #print(elapsedTime)
+    print(ball)
 ```
 
 # Bill of Materials
