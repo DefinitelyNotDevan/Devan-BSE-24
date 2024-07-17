@@ -21,11 +21,7 @@ You should comment out all portions of your portfolio that you have not complete
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/F7M7imOVGug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-For your final milestone, explain the outcome of your project. Key details to include are:
-- What you've accomplished since your previous milestone
-- What your biggest challenges and triumphs were at BSE
-- A summary of key topics you learned about
-- What you hope to learn in the future after everything you've learned at BSE
+My final milestone was the addition of my modification. Because I noticed my robot would not be able to track the ball unless it was in its camera frame, I decided that I wanted the robot to rotate around in a circle. This would make it so that eventually the robot would find the ball and drive towards it. I then added some logic to track the ball, creating a new variable called ball. Ball is set at 0 and if the ball is on the left, ball = 1, if the ball is on the right, ball = 2, and if ball is in the middle, ball = 0. With this information, if the ball goes offscreen because the car ran into it or my dog picked it up, it would rotate in the correct direction instead of flipping a coin and hoping it went the right way. That concludes my modification. Some troubles I had with this was not allowing enough time for the car to actually turn, as the delays were too short. I fixed this by lengthening the delays and adding stops in the right places. While this was not my biggest challenge, like the car overturning, it was still negatively affecting my result.
 
 
 
@@ -37,17 +33,12 @@ For your final milestone, explain the outcome of your project. Key details to in
 
 My second milestone was the completion of my base project. I now have a robot that tracks and moves towards a red ball. The first part of this milestone was configuring the Picam to detect the ball. To do this, we had the Picam mask out of all colors besides red. Because the ball is the only red item in the sight of the Picam, it makes the red ball the only thing shown once masked. Once we isolate the ball, we then use a function that finds the largest blob on the screen, which in this case will be the ball, and tells us the location of it. With some < or > signs, we can use where it is placed on the screen to tell how far the car needs to turn so it can drive directly toward it. I had a lot of errors with how far the car would turn, as it would overturn because of the camera's frame rate being too slow, causing it to detect the ball to much. This was solved by finding the part of the code that took up the most time and fixing it so it wouldn't cause as many delays. My next milestone will be modifications, which will make my robot turn around looking for the ball when the ball is not detected.
 
-For your second milestone, explain what you've worked on since your previous milestone. You can highlight:
-- Technical details of what you've accomplished and how they contribute to the final goal
-- What has been surprising about the project so far
-- Previous challenges you faced that you overcame
-- What needs to be completed before your final milestone 
-
 # First Milestone
 
 **Don't forget to replace the text below with the embedding for your milestone video. Go to Youtube, click Share -> Embed, and copy and paste the code to replace what's below.**
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bshj6nONh2Y" title="Devan G bluestamp" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 My first milestone is the compilation of all my components. This includes setting up a Raspberry Pi, which I had  trouble with. While trying to connect Visual Studio Code to the Raspberry Pi, an error saw me choosing the wrong OS for the Raspberry Pi in the selection menu in Visual Studio Code. While this error was a little annoying, it was worth going through so now in the future I understand what OS my Pi runs. This Pi will run the code that will control the motors in the car, however, it needs an H-Bridge to intermediate the communication between the two. The H-Bridge is essentially a middleman that reads the code from the Raspberry Pi and tells the motors what to do. Connected to the Raspberry Pi is also a camera, called Pi cam, which in the future, will be used to find out where the ball is and communicate back to the Pi that we need to move towards it. While the car is moving towards the ball, it might run into obstacles. For that, we have ultrasonic sensors attached to the car, making sure that if it gets too close to a wall, desk, pet, etc, it will not run into it. The next step will be to add more code so that the car will be able to track the ball and move towards it.
 
 
