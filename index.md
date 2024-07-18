@@ -29,7 +29,7 @@ My first milestone is the compilation of all my components. This includes settin
 
 
 # Schematics 
-![Image](diagram.pdf)
+![Image](diagram.jpg)
 
 # Code
 
