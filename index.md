@@ -1,9 +1,11 @@
 # Ball Tracking Robot
 This rover uses a Picam to detect a red ball in front of it, moves towards it, and uses ultrasonic sensors to stop it when it gets too close. While I had some trouble with code, I overcame my challenges and completed this robot with my modifications.
 
+
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Devan G | Marin Academy | Electrical Engineering | Incoming Sophmore
+
 
 ![Headstone Image](IMG_2211.jpg)
   
