@@ -1,6 +1,5 @@
 # Ball Tracking Robot
-This rover uses a Picam to detect a red ball in front of it, moves towards it, and uses ultrasonic sensors to stop it when it gets too close. While I had some troubles with code, I was able to overcome my challenges and complete this robot with modifications
-
+This rover uses a Picam to detect a red ball in front of it, moves towards it, and uses ultrasonic sensors to stop it when it gets too close. While I had some trouble with code, I overcame my challenges and completed this robot with my modifications.
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Devan G | Marin Academy | Electrical Engineering | Incoming Sophmore
@@ -11,7 +10,7 @@ This rover uses a Picam to detect a red ball in front of it, moves towards it, a
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qtaJhYmrjJM" title="Devan G milestone 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-My final milestone was the addition of my modification. Because I noticed my robot would not be able to track the ball unless it was in its camera frame, I decided that I wanted the robot to rotate around in a circle. This would make it so that eventually the robot would find the ball and drive towards it. I then added some logic to track the ball, creating a new variable called ball. Ball is set at 0 and if the ball is on the left, ball = 1, if the ball is on the right, ball = 2, and if ball is in the middle, ball = 0. With this information, if the ball goes offscreen because the car ran into it or my dog picked it up, it would rotate in the correct direction instead of flipping a coin and hoping it went the right way. That concludes my modification. Some troubles I had with this was not allowing enough time for the car to actually turn, as the delays were too short. I fixed this by lengthening the delays and adding stops in the right places. While this was not my biggest challenge, like the car overturning, it was still negatively affecting my result.
+My final milestone was the addition of my modification. Because I noticed my robot would not be able to track the ball unless it was in its camera frame, I decided that I wanted the robot to rotate around in a circle. This would make it so that eventually the robot would find the ball and drive towards it. I then added some logic to track the ball, creating a new variable called ball. Ball is set at 0 and if the ball is on the left, ball = 1, if the ball is on the right, ball = 2, and if ball is in the middle, ball = 0. With this information, if the ball goes offscreen because the car ran into it or my dog picked it up, it would rotate in the correct direction instead of flipping a coin and hoping it went the right way. That concludes my modification. Some troubles I had with this was not allowing enough time for the car actually to turn, as the delays were too short. I fixed this by lengthening the delays and adding stops in the right places. While this was not my biggest challenge, like the car overturning, it still negatively affected my results.
 
 
 
