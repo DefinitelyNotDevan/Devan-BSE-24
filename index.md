@@ -5,9 +5,6 @@ This rover uses a Picam to detect a red ball in front of it, moves towards it, a
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
 | Devan G | Marin Academy | Electrical Engineering | Incoming Sophmore
-
-
-![Headstone Image](IMG_2211.jpg)
   
 # Final Milestone
 
